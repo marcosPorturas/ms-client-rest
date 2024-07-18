@@ -11,8 +11,9 @@ import com.pe.web.cliente.app.dto.response.ClientResponse;
 import com.pe.web.cliente.app.entity.Client;
 import com.pe.web.cliente.app.repository.ClientRepository;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 
 @Service
 public class ClientServiceImplement implements ClientService{
@@ -21,26 +22,26 @@ public class ClientServiceImplement implements ClientService{
 	ClientRepository clientRepository;
 
 	@Override
-	public Single<List<ClientResponse>> getAllClientResponse() {
+	public Mono<List<ClientResponse>> getAllClientResponse() {
 		// TODO Auto-generated method stub
-		return Observable.fromIterable(clientRepository.findAll())
+		return Flux.fromIterable(clientRepository.findAll())
 				.map(this::invokeClientBuilder)
-				.toList();
+				.collectList();
 				
 	}
 
 	@Override
-	public Single<ClientResponse> getClientResponse(Integer codClient) {
+	public Mono<ClientResponse> getClientResponse(Integer codClient) {
 		// TODO Auto-generated method stub
-		return Single.just(clientRepository.findById(codClient)
+		return Mono.just(clientRepository.findById(codClient)
 				.orElse(new Client()))
 				.map(this::invokeClientBuilder);
 	}
 	
 	@Override
-	public Single<ClientResponse> addClient(ClientRequest clientRequest) {
+	public Mono<ClientResponse> addClient(ClientRequest clientRequest) {
 		// TODO Auto-generated method stub
-		return Single.just(clientRequest)
+		return Mono.just(clientRequest)
 				.map(this::invokeClientEntityBuilder)
 				.map(client->clientRepository.save(client))
 				.map(client->clientRepository.findById(client.getCodClient())

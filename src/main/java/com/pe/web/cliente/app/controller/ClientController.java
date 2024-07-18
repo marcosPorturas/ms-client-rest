@@ -14,7 +14,8 @@ import com.pe.web.cliente.app.dto.request.ClientRequest;
 import com.pe.web.cliente.app.dto.response.ClientResponse;
 import com.pe.web.cliente.app.service.ClientService;
 
-import io.reactivex.Single;
+import reactor.core.publisher.Mono;
+
 
 @RestController
 @RequestMapping("/client")
@@ -25,17 +26,17 @@ public class ClientController {
 	
 	
 	@GetMapping("/all")
-	public Single<List<ClientResponse>> getAllClient(){
+	public Mono<List<ClientResponse>> getAllClient(){
 		return clientService.getAllClientResponse();
 	}
 	
 	@GetMapping("/{codClient}")
-	public Single<ClientResponse> getClient(@PathVariable("codClient")Integer codClient){
+	public Mono<ClientResponse> getClient(@PathVariable("codClient")Integer codClient){
 		return clientService.getClientResponse(codClient);
 	}
 
 	@PostMapping("/add")
-	public Single<ClientResponse> addClient(@RequestBody ClientRequest clientRequest){
+	public Mono<ClientResponse> addClient(@RequestBody ClientRequest clientRequest){
 		return clientService.addClient(clientRequest);
 	}
 	

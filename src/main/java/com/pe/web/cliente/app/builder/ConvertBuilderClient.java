@@ -39,7 +39,6 @@ public class ConvertBuilderClient {
 	}
 	
 	
-	//Nodo Principal
 	public ClientResponse convertToClientResponse(Client client) {
 		
 		return ClientResponse.builder()
@@ -52,7 +51,7 @@ public class ConvertBuilderClient {
 				.build();
 	}
 	
-	//NodoSecundario
+	
 	public PersonalInfo converToPersonalInfo(Client client) {
 		return PersonalInfo.builder()
 				.telephone(client.getTelephone())	
@@ -64,7 +63,7 @@ public class ConvertBuilderClient {
 				.build();
 	}
 	
-	//Nodo Secundario
+	
 	public MemberInfo converToMemberInfo(Client client) {
 		return MemberInfo.builder()
 				.creationDate(Util.convertToStringDate(client.getCreationDate()))
